@@ -11,20 +11,53 @@
   },
   "inbounds": [
     {
-      "port": 59552,
+      "port": 2053,
       "listen": "0.0.0.0",
       "protocol": "vless",
       "settings": {
         "clients": [
           {
-            "id": "84ecb567-f30c-4fff-8b71-1abc223ebe3b"
+            "id": "fardin"
           }
         ],
         "decryption": "none"
       },
       "streamSettings": {
         "network": "tcp"
-      }
+      },
+      "tag": "vless-in"
+    },
+    {
+      "port": 1080,
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "settings": {
+        "auth": "password",
+        "accounts": [
+          {
+            "user": "fardin",
+            "pass": "96470891"
+          }
+        ],
+        "udp": true
+      },
+      "tag": "socks-in-1080"
+    },
+    {
+      "port": 1081,
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "settings": {
+        "auth": "password",
+        "accounts": [
+          {
+            "user": "fardin",
+            "pass": "96470891"
+          }
+        ],
+        "udp": true
+      },
+      "tag": "socks-in-1081"
     }
   ],
   "outbounds": [
@@ -50,17 +83,18 @@
     "rules": [
       {
         "type": "field",
-        "outboundTag": "warp",
-        "domain": [
-          "geosite:geolocation-!cn"
-        ]
+        "inboundTag": ["socks-in-1081"],
+        "outboundTag": "direct"
       },
       {
         "type": "field",
-        "outboundTag": "direct",
-        "domain": [
-          "geosite:cn"
-        ]
+        "domain": ["geosite:geolocation-!cn"],
+        "outboundTag": "warp"
+      },
+      {
+        "type": "field",
+        "domain": ["geosite:cn"],
+        "outboundTag": "direct"
       }
     ]
   }
