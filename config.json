@@ -1,0 +1,67 @@
+{
+  "log": {
+    "loglevel": "info"
+  },
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "8.8.8.8",
+      "localhost"
+    ]
+  },
+  "inbounds": [
+    {
+      "port": 59552,
+      "listen": "0.0.0.0",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "84ecb567-f30c-4fff-8b71-1abc223ebe3b"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 40000
+          }
+        ]
+      },
+      "tag": "warp"
+    },
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "warp",
+        "domain": [
+          "geosite:geolocation-!cn"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "direct",
+        "domain": [
+          "geosite:cn"
+        ]
+      }
+    ]
+  }
+}
