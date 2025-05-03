@@ -28,7 +28,7 @@
       "tag": "vless-in"
     },
     {
-      "port": 1080,
+      "port": 1090,
       "listen": "0.0.0.0",
       "protocol": "socks",
       "settings": {
@@ -44,7 +44,7 @@
       "tag": "socks-in-1080"
     },
     {
-      "port": 1081,
+      "port": 1091,
       "listen": "0.0.0.0",
       "protocol": "socks",
       "settings": {
@@ -83,17 +83,7 @@
     "rules": [
       {
         "type": "field",
-        "inboundTag": ["socks-in-1081"],
-        "outboundTag": "direct"
-      },
-      {
-        "type": "field",
-        "domain": ["geosite:geolocation-!cn"],
-        "outboundTag": "warp"
-      },
-      {
-        "type": "field",
-        "domain": ["geosite:cn"],
+        "inboundTag": ["socks-in-1081", "vless-in"],
         "outboundTag": "direct"
       }
     ]
