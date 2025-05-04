@@ -61,22 +61,24 @@
     }
   ],
   "outbounds": [
-    {
-      "protocol": "socks",
-      "settings": {
-        "servers": [
-          {
-            "address": "127.0.0.1",
-            "port": 1070
-          }
-        ]
-      },
-      "tag": "nordvpn"
-    },
-    {
-      "protocol": "freedom",
-      "tag": "direct"
+ {
+    "tag": "nordvpn",
+    "protocol": "socks",
+    "settings": {
+      "servers": [
+        {
+          "address": "127.0.0.1",
+          "port": 1070,
+          "users": [
+            {
+              "user": "fardin",
+              "pass": "9647"
+            }
+          ]
+        }
+      ]
     }
+  }
   ],
   "routing": {
     "domainStrategy": "AsIs",
