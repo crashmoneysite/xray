@@ -61,6 +61,10 @@
     }
   ],
   "outbounds": [
+        {
+      "protocol": "freedom",
+      "tag": "direct"
+        },
     {
       "protocol": "socks",
       "settings": {
@@ -72,10 +76,6 @@
         ]
       },
       "tag": "warp"
-    },
-    {
-      "protocol": "freedom",
-      "tag": "direct"
     }
   ],
   "routing": {
