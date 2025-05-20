@@ -1,0 +1,95 @@
+{
+  "log": {
+    "loglevel": "info"
+  },
+  "dns": {
+    "servers": ["1.1.1.1", "8.8.8.8", "localhost"]
+  },
+  "inbounds": [
+    {
+      "port": 2053,
+      "listen": "0.0.0.0",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "fardin"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp"
+      },
+      "tag": "vless-in"
+    },
+    {
+      "port": 1090,
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "settings": {
+        "auth": "password",
+        "accounts": [
+          {
+            "user": "fardin",
+            "pass": "9647"
+          }
+        ],
+        "udp": true
+      },
+      "tag": "socks-in-1080"
+    },
+        {
+      "tag": "VLESS WS TLS",
+      "listen": "0.0.0.0",
+      "port": 8443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "asgard",
+            "flow": ""
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/"
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "$DOMAIN",
+          "certificates": [
+            {
+              "ocspStapling": 3600,
+              "certificateFile": "/etc/letsencrypt/live/$DOMAIN/fullchain.pem",
+              "keyFile": "/etc/letsencrypt/live/$DOMAIN/privkey.pem"
+            }
+          ],
+          "minVersion": "1.2",
+          "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": []
+  }
+}
